@@ -1,16 +1,31 @@
-# admin_audit_app
+# Audit App
 
-A new Flutter project.
+> Read-only audit dashboard for a beauty salon — monitors every create, edit, and delete action across appointments, clients, and booking requests.
 
-## Getting Started
+## Stack
+Flutter 3 · Dart 3 · Firebase (Firestore + Auth) · Google Sign-In · Material 3 · i18n (es)
 
-This project is a starting point for a Flutter application.
+## Features
+- 🔐 Google Sign-In with Firebase Custom Claims RBAC (admin-only access)
+- 📋 Real-time audit log stream from Firestore — ordered by most recent
+- 🔍 Full-text search by client name, service, or performer
+- 🎛️ Multi-filter panel — by action, category, performer, worker, and date range
+- 🃏 Action cards with color-coded icons (create / edit / delete / status / price)
+- 📄 Entry detail screen — full event metadata, entity ID, UID, and structured diff
 
-A few resources to get you started if this is your first Flutter project:
+## Structure
+```
+lib/
+├── models/     audit_entry (+ ActionCategory enum, display helpers)
+├── services/   auth (Custom Claims check), audit_data (Firestore stream + filters)
+├── screens/    login, audit, entry_detail
+└── widgets/    audit_entry_card, filter_sheet
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Setup
+```bash
+flutter pub get
+flutterfire configure --project=agenda-loja
+flutter run
+```
+> Admin role must be set via Firebase Admin SDK. Shares the `agenda-loja` Firebase project with the main salon app.
